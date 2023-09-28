@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
 <div class="container">
     <div class="card mt-6">
         <div class="card-body">
@@ -32,11 +31,7 @@
                                     <td>{{$user->created_at}}</td>
                                     <td>{{$user->updated_at}}</td>
                                 </tr>
-
-
                         </tbody>
-
-
                     </table>
                     <a href="{{ route('dashboard') }}" class="btn btn-secondary rounded">Volver</a>
                 </div>

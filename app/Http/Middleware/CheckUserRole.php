@@ -22,6 +22,7 @@ class CheckUserRole
                 $rol = Rol::find($user->rol_id);
                 $display_rol = $rol->name; // Utiliza Eloquent para obtener el rol del usuario
                 $request->session()->put('role', $display_rol); //Almacena en una variable de sesión "role" el rol del usuario autenticado
+
                 return $next($request);
             }
 

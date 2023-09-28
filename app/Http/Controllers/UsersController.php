@@ -13,6 +13,8 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
+
+
             $role = $request->session()->get('role');
 
             if ($role == 'Administrador') {
