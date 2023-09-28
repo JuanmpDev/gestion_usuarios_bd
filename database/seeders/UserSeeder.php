@@ -17,13 +17,21 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+
+            DB::statement('SET FOREIGN_KEY_CHECKS=0');
+            User::truncate();
             $faker = Faker::create();
             $rol = Rol::inRandomOrder()->first();
 
-            for($i=0;$i<10;$i++){
-                $name = $faker->name;
-                $email = $faker->unique()->safeEmail;
-                $password = bcrypt($faker->password);
+            foreach(range(1,10) as $user){
+
+                // Crear el usuario con el rol asignado
+                User::create([
+                    'name' => $faker->name,
+                    'rol_id' => $rol->id,
+                    'email' => $faker->unique()->safeEmail,
+                    'password' => Hash::make($faker->password()),
+                ]);
 
             }
 
@@ -44,7 +52,6 @@ class UserSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
                 ]);
-
 
             }
 
