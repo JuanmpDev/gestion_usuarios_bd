@@ -10,16 +10,30 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{ route('dashboard') }}">Dashboard</a>
                 </li>
-            </ul>
-            <div class="mx-auto">
-                <span class="navbar-text">Rol: {{ Auth::user()->rol->name }}</span>
-            </div>
-            <form action="{{ route('logout') }}" method="post">
+                </ul>
+                <div class="mx-auto">
+                    <span class="navbar-text">Rol: {{ Auth::user()->rol->name }}</span>
+                </div>
+
+            <form action="{{route('logout')}}" method="post">
                 @csrf
-                <button class="btn btn-outline-success" type="submit">Cerrar sesión de {{ Auth::user()->name }}</button>
+                <button  class="btn btn-outline-error" type="submit">Cerrar sesion de {{Auth::user()->name}}</button>
             </form>
         </div>
     </div>
 </nav>
+@else
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <form action="{{route('login')}}" method="post">
+                        @csrf
+                        <button  class="btn btn-outline-success" type="submit">Entrar</button>
+                    </form>                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 @endif
-
