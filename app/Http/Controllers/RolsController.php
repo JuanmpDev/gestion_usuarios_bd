@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Rol;
+use Symfony\Component\Console\Input\Input;
 
 class RolsController extends Controller
 {
@@ -24,7 +25,7 @@ class RolsController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.Roles.create');
     }
 
     /**
@@ -32,7 +33,13 @@ class RolsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       Rol::create([
+
+        'name' => $request->input('inputName'),
+
+       ]);
+
+       return redirect()->route('dashboard')->with('success', 'Rol registrado correctamente');
     }
 
     /**

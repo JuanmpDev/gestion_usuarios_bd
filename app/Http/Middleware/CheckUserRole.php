@@ -18,15 +18,16 @@ class CheckUserRole
     public function handle(Request $request, Closure $next): Response
         {
             if (Auth::check()) { //Chequea si el usuario esta autenticado
-                $user = Auth::user();
-                $rol = Rol::find($user->rol_id);
-                $display_rol = $rol->name; // Utiliza Eloquent para obtener el rol del usuario
-                $request->session()->put('role', $display_rol); //Almacena en una variable de sesión "role" el rol del usuario autenticado
+                if(Auth::user()->rol->id == '1') {
+                    return $next($request);
+                }
+                else {
 
-                return $next($request);
+                    return redirect()->back()->withErrors(['No tienes permisos']);
+                }
             }
 
-            return redirect('login');
+            return redirect('login')->withErrors(['Usuario no registrado en nuestra base de datos']);
         }
 
 

@@ -6,9 +6,9 @@
             <div class="row">
                 <div class="col-12">
 
-                    <h2><b>EDITAR USUARIO</b></h2><br>
+                    <h2><b>CREAR USUARIO</b></h2><br>
 
-                    <form action="{!!route('users.update', $user->id) !!}" method="POST">
+                    <form action="{!!route('users.store')!!}" method="POST">
                         @if ($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
@@ -19,38 +19,40 @@
                             </div>
                         @endif
                         @csrf
-                        @method('PUT')
+                        @method('POST')
                         <div class="form-group row">
-                            <label for="inputId" class="col-sm-2 col-form-label">ID</label>
+                            <label for="inputName" class="col-sm-2 col-form-label">Nombre</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control border rounded" id="inputId" value="{{$user->id}}" readonly>
+                                <input type="text" class="form-control border rounded" name="inputName" id="inputName" placeholder="Introduzca el nombre de usuario" required>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="inputName" class="col-sm-2 col-form-label">Nombre</label>
+                            <label for="inputPassword" class="col-sm-2 col-form-label">Contraseña</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control border rounded" name="inputName" id="inputName" value="{{$user->name}}">
+                                <input type="password" class="form-control border rounded" name="inputPassword" id="inputPassword" placeholder="Establezca una contraseña" required>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
                             <div class="col-sm-10">
-                                <input type="text"  class="form-control border rounded" name="inputEmail"id="inputEmail" value="{{$user->email}}">
+                                <input type="text"  class="form-control border rounded" name="inputEmail"id="inputEmail" placeholder="Escriba un correo electrónico" required>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label for="inputRol" class="col-sm-2 col-form-label">Rol</label>
                             <div class="col-sm-10">
-                                <select name="role"  class="form-control border rounded">
+                                <select name="role"  class="form-control border rounded" required>
+                                    <option value="">Seleccione un rol de usuario</option>
                                     @foreach ($roles as $role)
-                                        <option value="{{ $role->id }}" {{ $user->rol->id == $role->id ? 'selected' : '' }}>{{ $role->name }}</option>
+                                        <option value="{{ $role->id }}">{{ $role->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
+
 
 
                         <br>

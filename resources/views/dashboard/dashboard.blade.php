@@ -13,12 +13,20 @@
                 <div class="row">
                     <div class="col-12">
 
-                        <h2><b>USUARIOS</b></h2><br>
+                        <div class="row align-items-center">
+                            <div class="col-sm-9">
+                                <h2><b>USUARIOS</b></h2>
+                            </div>
+                            <div class="col-sm-3 text-sm-right">
+                                <a href={{route('users.create')}} class="btn btn-success">Crear usuario</a>
+                            </div>
+                        </div>
+                        <br>
 
-                        <table class="table">
+                        <table class="table" id='usersTable'>
                             <thead>
                             <tr>
-                                <th scope="col">@sortablelink('id' ,'ID')</th>
+                                <th scope="col">ID</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Rol</th>
@@ -34,17 +42,28 @@
                                     <td>{{$user->rol->name}}</td>
                                     <td>
 
-                                        <a href="{{ route('users.show', $user->id) }}" class="btn btn-outline-primary">Ver</a>
+                                        <a href="{{ route('users.show', $user->id) }}" class="btn btn-primary">Ver</a>
 
 
-                                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-outline-warning"
+                                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning"
                                            type="submit">Editar</a>
 
-
-                                        <a href="{{ route('users.destroy', $user->id) }}" class="btn btn-outline-danger"
+                                        <!-- ¿CÓMO PROCESARIAMOS UN ENLACE POR EL MÉTODO DELETE?
+                                            <a href=" route('users.destroy', $user->id) " class="btn btn-outline-danger"
                                            onclick="return confirm('¿Estás seguro de que quieres eliminar este registro?')"
                                            type="submit">Eliminar
-                                        </a>
+
+                                        </a> -->
+
+                                        <form action="{{ route('users.destroy', $user->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger"
+                                                    onclick="return confirm('¿Estás seguro de que quieres eliminar este registro?')"
+                                                    type="submit">Eliminar
+                                            </button>
+                                        </form>
+
 
                                     </td>
                                 </tr>
@@ -55,13 +74,22 @@
 
 
                         </table>
-                        {{--   <div> {!! $users->links() !!} </div><br>--}}
+                        <br><br>
 
-                        <h2><b>ROLES</b></h2><br>
-                        <table class="table">
+                        <div class="row align-items-center">
+                            <div class="col-sm-9">
+                                <h2><b>ROLES</b></h2>
+                            </div>
+                            <div class="col-sm-3 text-sm-right">
+                                <a href={{route('rols.create')}} class="btn btn-success">Crear rol</a>
+                            </div>
+                        </div>
+                        <br>
+
+                        <table class="table" id='rolsTable'>
                             <thead>
                             <tr>
-                                <th scope="col">@sortablelink('id','ID')</th>
+                                <th scope="col">ID</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Pertenece a</th>
                                 <th scope="col">Acciones</th>
@@ -82,13 +110,13 @@
 
                                         <form action="{{ route('rols.edit', $rol->id) }}" method="GET">
                                             @csrf
-                                            <button class="btn btn-outline-warning" type="submit">Editar</button>
+                                            <button class="btn btn-warning" type="submit">Editar</button>
                                         </form>
 
                                         <form action="{{ route('rols.destroy', $rol->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-outline-danger"
+                                            <button class="btn btn-danger"
                                                     onclick="return confirm('¿Estás seguro de que quieres eliminar este registro?')"
                                                     type="submit">Eliminar
                                             </button>

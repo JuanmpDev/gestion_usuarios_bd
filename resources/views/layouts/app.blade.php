@@ -16,5 +16,18 @@
 
             @yield('content')
         </div>
+        <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#usersTable').DataTable({
+                    lengthMenu: [[5, 10, 15, -1], [5, 10, 15, "All"]]
+                });
+                $('#rolsTable').DataTable({
+                    lengthMenu: [[5, 10, 15, -1], [5, 10, 15, "All"]]
+                });
+            });
+        </script>
+
     </body>
 </html>

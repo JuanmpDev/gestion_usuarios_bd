@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Rol;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
@@ -14,27 +16,31 @@ class UsersController extends Controller
     public function index(Request $request)
     {
 
+    if (Auth::check())
 
-            $role = $request->session()->get('role');
+            if (Auth::user()->rol->id == '1') {
 
-            if ($role == 'Administrador') {
-
-                $users = User::sortable('id')->paginate(4);
+                $users = User::all();
                 $roles = Rol::all();
                 return view ('dashboard.dashboard', compact('users', 'roles'));
 
-            } elseif ($role == 'Usuario') {
+            } elseif (Auth::user()->rol->id == '2') {
                 return view('dashboard.dashboardUser');
             }
 
+            else {
+
+                return redirect('login')->withErrors(['Usuario no registrado en nuestra base de datos']);
+            }
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $roles = Rol::all();
+        return view('dashboard.Users.create', compact('roles'));
     }
 
     /**
@@ -42,7 +48,23 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'inputName' => 'required|max:255',
+            'inputEmail' => 'required|email|unique:users,email',
+            'role' => 'required|exists:rols,id',
+        ]);
+
+        // Crear el usuario con el rol asignado
+        User::create([
+            'name' => $request->input('inputName'),
+            'rol_id' => $request->input('role'),
+            'email' => $request->input('inputEmail'),
+            'password' => Hash::make($request->input('inputPassword')),
+        ]);
+
+        // Redirige al usuario a una página de éxito
+        return redirect()->route('dashboard')->with('success', 'Usuario creado con éxito');
+
     }
 
     /**
@@ -62,7 +84,8 @@ class UsersController extends Controller
 
     {
         $user = User::find($id);
-        return view('dashboard.Users.edit' , compact('user'));
+        $roles = Rol::all();
+        return view('dashboard.Users.edit' , compact('user', 'roles'));
 
     }
 
@@ -71,32 +94,18 @@ class UsersController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // Obtén el usuario por ID
+        $user = User::find($id);
 
-    // Obtén el usuario por ID
-    $user = User::find($id);
+        $request->validate([
+            'inputName' => 'required|max:255',
+            'inputEmail' => 'required|email|unique:users,email,' . $user->id,
+            'role' => 'required|exists:rols,id',
+        ]);
 
-    $request->validate([
-        'inputName' => 'required|max:255',
-        'inputEmail' => 'required|email',
-        'inputRol' => 'required|in:Administrador,Usuario',
-    ]);
-
-
-    $user->name = $request->input('inputName');
-    $user->email = $request->input('inputEmail');
-
-    // Actualiza los campos del usuario
-    if ($request->input('inputRol')=='Administrador'){
-        $user->rol_id = '1';
-    }
-    elseif ($request->input('inputRol')=='Usuario') {
-        $user->rol_id = '2';
-    }
-
-    else {
-        return redirect()->back()->withErrors(['inputRol' => 'Rol no válido']);
-    }
-
+        $user->name = $request->input('inputName');
+        $user->email = $request->input('inputEmail');
+        $user->rol_id = $request->input('role');
 
     // Guarda los cambios en la base de datos
     $user->save();
