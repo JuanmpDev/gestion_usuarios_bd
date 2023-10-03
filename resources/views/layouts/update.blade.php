@@ -12,6 +12,14 @@
     </div>
     <div class="card mb-3">
         <div class="card-header">
+            <h4>Utilización de Datatables</h4>
+        </div>
+        <div class="card-body">
+            <p class="card-text">Se empieza a utilizar Datatables para el filtrado de mayor a menor o viceversa en cada uno de los campos de la base de datos pero sin acudir a ella, solo de forma local</p>
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div class="card-header">
             <h4>Desplegables incorporados</h4>
         </div>
         <div class="card-body">
