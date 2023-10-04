@@ -41,19 +41,21 @@ Route::middleware('checkRoleUser')->group(function () {
 
     Route::get('/dashboard/user',[UsersController::class, 'index'])->name('userDashboard');
     Route::get('/dashboard/admin/users/create', [UsersController::class, 'create'])->name('users.create');
+    Route::get('/dashboard/admin/users/{id}/delete', [UsersController::class, 'destroy'])->name('users.destroy');
     Route::post('/dashboard/admin/users', [UsersController::class, 'store'])->name('users.store');
+    Route::put('/dashboard/admin/users/{id}', [UsersController::class, 'update'])->name('users.update');
 
     Route::get('/dashboard/admin/users/{id}', [UsersController::class, 'show'])->name('users.show');
     Route::get('/dashboard/admin/users/{id}/edit', [UsersController::class, 'edit'])->name('users.edit');
-    Route::put('/dashboard/admin/users/{id}', [UsersController::class, 'update'])->name('users.update');
-    Route::delete('/dashboard/admin/users/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
+
 
     Route::get('/dashboard/admin/rols/create', [RolsController::class, 'create'])->name('rols.create');
+    Route::get('/dashboard/admin/rols/{id}', [RolsController::class, 'destroy'])->name('rols.destroy');
     Route::post('/dashboard/admin/rols', [RolsController::class, 'store'])->name('rols.store');
     Route::get('/dashboard/admin/rols{id}', [RolsController::class, 'show'])->name('rols.show');
     Route::get('/dashboard/admin/rols/{id}/edit', [RolsController::class, 'edit'])->name('rols.edit');
     Route::put('/dashboard/admin/rols/{id}', [RolsController::class, 'update'])->name('rols.update');
-    Route::delete('/dashboard/admin/rols/{id}', [RolsController::class, 'destroy'])->name('rols.destroy');
+
 
 });
 
