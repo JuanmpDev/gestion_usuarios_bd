@@ -99,10 +99,14 @@
                                         <a href="{{ route('rols.edit', $rol->id) }}" class="btn btn-warning"
                                             type="submit">Editar</a>
 
+                                        <form action="{{route('rols.destroy',$rol->id) }}" method="post">
+                                            @csrf
+                                            @method("DELETE")
+                                            <button class="btn btn-danger" type="submit"
+                                                    onclick="return confirm('¿Estás seguro de que quieres eliminar este registro?')">Eliminar Rol</button>
 
-                                        <a href="{{route('rols.destroy', $rol->id) }}" class="btn btn-danger"
-                                            onclick="return confirm('¿Estás seguro de que quieres eliminar este registro?')">Eliminar</a>
-                                    </td>
+                                        </form>
+                                        </td>
 
                                 </tr>
 

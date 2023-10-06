@@ -63,14 +63,11 @@ class RolsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Rol $rol)
     {
         // Obtén el usuario por ID
-    $rol = Rol::find($id);
 
     $rol->name = $request->input('inputName');
-
-
     // Guarda los cambios en la base de datos
     $rol->save();
 
@@ -83,11 +80,10 @@ class RolsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Rol $rol)
     {
-        $rol = Rol::find($id);
+        //Checker permisos
         $rol->delete();
-
         // Redirige al usuario a la página del panel de control después de eliminar el registro
         return redirect()->route('dashboard')->with('success', 'Rol eliminado correctamente con sus usuarios correspondientes. (CASCADE)');
     }
