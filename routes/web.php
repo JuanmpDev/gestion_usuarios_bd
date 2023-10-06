@@ -22,7 +22,7 @@ use App\Models\Rol;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
  Route::get('/test', function () {
 

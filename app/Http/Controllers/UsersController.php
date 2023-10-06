@@ -24,7 +24,7 @@ class UsersController extends Controller
                 $roles = Rol::all();
                 return view ('dashboard.dashboard', compact('users', 'roles'));
 
-            } elseif (Auth::user()->rol->id == '2') {
+            } elseif (Auth::user()->rol->id == '2' || Auth::user()->rol->id == '5') {
                 return view('dashboard.dashboardUser');
             }
 
