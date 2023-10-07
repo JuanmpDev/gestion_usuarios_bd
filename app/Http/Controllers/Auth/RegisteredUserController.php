@@ -28,7 +28,7 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -47,7 +47,9 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return ['Datos incorrectos'];
+
+        // return redirect(RouteServiceProvider::HOME);
     }
 
     public function register(Request $request)
