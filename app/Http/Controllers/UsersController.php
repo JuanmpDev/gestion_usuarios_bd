@@ -70,7 +70,7 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $id)
     {
         $user = User::find($id);
         return view('dashboard.Users.show', compact('user'));
@@ -79,9 +79,7 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-
-
+    public function edit(int $id)
     {
         $user = User::find($id);
         $roles = Rol::all();
@@ -92,7 +90,7 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, integer $id)
     {
         // Obtén el usuario por ID
         $user = User::find($id);
@@ -118,7 +116,7 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
         $user = User::find($id);
         $user->delete();

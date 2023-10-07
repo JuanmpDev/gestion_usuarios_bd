@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Rol;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -35,11 +36,11 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
-
+        $rolUsuario = Rol::where("name","Usuario")->first();
         $user = User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
-            'rol_id'=> '5',
+            'rol_id'=> $rolUsuario->id,
             'password' => Hash::make($request->input('password')),
         ]);
 
@@ -47,17 +48,7 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return ['Datos incorrectos'];
-
-        // return redirect(RouteServiceProvider::HOME);
+        return redirect(RouteServiceProvider::HOME);
     }
 
-    public function register(Request $request)
-    {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', 'min:6'],
-        ]);
-    }
 }
