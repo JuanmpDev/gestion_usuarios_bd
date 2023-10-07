@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ValidateUserRequest;
 use Illuminate\Http\Request;
 use App\Models\Rol;
 use App\Models\User;
@@ -46,20 +47,15 @@ class UsersController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ValidateUserRequest $request)
     {
-        $request->validate([
-            'inputName' => 'required|max:255',
-            'inputEmail' => 'required|email|unique:users,email',
-            'role' => 'required|exists:rols,id',
-        ]);
 
         // Crear el usuario con el rol asignado
         User::create([
-            'name' => $request->input('inputName'),
-            'rol_id' => $request->input('role'),
-            'email' => $request->input('inputEmail'),
-            'password' => Hash::make($request->input('inputPassword')),
+            'name' => $request->inputName,
+            'rol_id' => $request->role,
+            'email' => $request->inputEmail,
+            'password' => Hash::make($request->inputPassword),
         ]);
 
         // Redirige al usuario a una página de éxito
@@ -70,18 +66,16 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $id)
+    public function show(User $user)
     {
-        $user = User::find($id);
         return view('dashboard.Users.show', compact('user'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(int $id)
+    public function edit(User $user)
     {
-        $user = User::find($id);
         $roles = Rol::all();
         return view('dashboard.Users.edit' , compact('user', 'roles'));
 
@@ -90,35 +84,26 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, integer $id)
+    public function update(ValidateUserRequest $request, User $user)
     {
-        // Obtén el usuario por ID
-        $user = User::find($id);
 
-        $request->validate([
-            'inputName' => 'required|max:255',
-            'inputEmail' => 'required|email|unique:users,email,' . $user->id,
-            'role' => 'required|exists:rols,id',
-        ]);
+        $user->name = $request->inputName;
+        $user->email = $request->inputEmail;
+        $user->rol_id = $request->role;
 
-        $user->name = $request->input('inputName');
-        $user->email = $request->input('inputEmail');
-        $user->rol_id = $request->input('role');
+        // Guarda los cambios en la base de datos
+        $user->save();
 
-    // Guarda los cambios en la base de datos
-    $user->save();
-
-    // Redirige al usuario a una página de éxito
-    return redirect()->route('dashboard')->with('success', 'Usuario actualizado con éxito');
+        // Redirige al usuario a una página de éxito
+        return redirect()->route('dashboard')->with('success', 'Usuario actualizado con éxito');
 
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id)
+    public function destroy(User $user)
     {
-        $user = User::find($id);
         $user->delete();
 
         // Redirige al usuario a la página del panel de control después de eliminar el registro

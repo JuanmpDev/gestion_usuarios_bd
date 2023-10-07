@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ValidateRolRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Rol;
@@ -31,11 +32,11 @@ class RolsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ValidateRolRequest $request)
     {
        Rol::create([
 
-        'name' => $request->input('inputName'),
+        'name' => $request->inputName,
 
        ]);
 
@@ -43,31 +44,21 @@ class RolsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        return redirect()->route('dashboard')->with('success', 'Se ha pulsado el botón ver');
-
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Rol $rol)
     {
-        $rol = Rol::find($id);
+
         return view('dashboard.Roles.edit' , compact('rol'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Rol $rol)
+    public function update(ValidateRolRequest $request, Rol $rol)
     {
-        // Obtén el usuario por ID
 
-    $rol->name = $request->input('inputName');
+    $rol->name = $request->inputName;
     // Guarda los cambios en la base de datos
     $rol->save();
 
@@ -76,7 +67,6 @@ class RolsController extends Controller
 
     }
 
-
     /**
      * Remove the specified resource from storage.
      */
@@ -84,6 +74,7 @@ class RolsController extends Controller
     {
         //Checker permisos
         $rol->delete();
+
         // Redirige al usuario a la página del panel de control después de eliminar el registro
         return redirect()->route('dashboard')->with('success', 'Rol eliminado correctamente con sus usuarios correspondientes. (CASCADE)');
     }

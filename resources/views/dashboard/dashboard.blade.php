@@ -49,9 +49,13 @@
                                            type="submit">Editar</a>
 
 
-                                        <a href="{{route('users.destroy', $user->id) }}" class="btn btn-danger"
-                                           onclick="return confirm('¿Estás seguro de que quieres eliminar este registro?')">
-                                          Eliminar </a>
+                                           <form action="{{route('users.destroy',$user->id) }}" method="post">
+                                            @csrf
+                                            @method("DELETE")
+                                            <button class="btn btn-danger" type="submit"
+                                                    onclick="return confirm('¿Estás seguro de que quieres eliminar este registro?')">Eliminar</button>
+
+                                        </form>
 
                                     </td>
                                 </tr>
