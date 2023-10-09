@@ -20,22 +20,22 @@ class ValidateUserRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules()
-{
-    $rules = [
-        'inputName' => 'required|max:255',
-        'role' => 'required|exists:rols,id',
-    ];
+    {
+        $rules = [
+            'inputName' => 'required|max:255',
+            'role' => 'required|exists:rols,id',
+        ];
+        //TODO=>Usar otra clase request para update
+        if ($this->method() == 'PUT' || $this->method() == 'PATCH') {
+            // Si el método es PUT o PATCH, estamos actualizando el usuario
+            $userId = $this->route('user')->id; // Asegúrate de que 'user' sea el nombre correcto del parámetro de ruta.
+            $rules['inputEmail'] = 'required|email|unique:users,email,' . $userId;
+        } else {
+            // Si no, estamos creando un nuevo usuario
+            $rules['inputEmail'] = 'required|email|unique:users,email';
+        }
 
-    if ($this->method() == 'PUT' || $this->method() == 'PATCH') {
-        // Si el método es PUT o PATCH, estamos actualizando el usuario
-        $userId = $this->route('user')->id; // Asegúrate de que 'user' sea el nombre correcto del parámetro de ruta.
-        $rules['inputEmail'] = 'required|email|unique:users,email,' . $userId;
-    } else {
-        // Si no, estamos creando un nuevo usuario
-        $rules['inputEmail'] = 'required|email|unique:users,email';
+        return $rules;
     }
-
-    return $rules;
-}
 
 }
