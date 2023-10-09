@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ValidateUserRequest;
+use App\Http\Requests\ValidateUserStoreRequest;
+use App\Http\Requests\ValidateUserUpdateRequest;
 use Illuminate\Http\Request;
 use App\Models\Rol;
 use App\Models\User;
+use Illuminate\Contracts\Cache\Store;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -38,7 +40,7 @@ class UsersController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
+    public function create()
     {
         $roles = Rol::all();
         return view('dashboard.Users.create', compact('roles'));
@@ -47,7 +49,7 @@ class UsersController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ValidateUserRequest $request)
+    public function store(ValidateUserStoreRequest $request)
     {
 
         // Crear el usuario con el rol asignado
@@ -84,7 +86,7 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ValidateUserRequest $request, User $user)
+    public function update(ValidateUserUpdateRequest $request, User $user)
     {
 
         $user->name = $request->inputName;

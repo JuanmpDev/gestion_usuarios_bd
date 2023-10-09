@@ -22,7 +22,7 @@ class ValidateRolRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'inputName' => 'required|max:15',
+            'inputName' => 'alpha|required|max:15',
         ];
     }
 }

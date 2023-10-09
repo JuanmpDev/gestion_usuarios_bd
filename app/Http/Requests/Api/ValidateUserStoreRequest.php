@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
 
 class ValidateUserStoreRequest extends FormRequest
 {
@@ -12,7 +11,7 @@ class ValidateUserStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,10 +21,13 @@ class ValidateUserStoreRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => 'alpha|required|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required','min:8', 'confirmed', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/',
+        $rules = [
+            'inputName' => 'alpha|required|max:255',
+            'inputEmail' => 'required|email|unique:users,email',
+            'role' => 'required|exists:rols,id',
+            'inputPassword' => 'required','min:8', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/',
         ];
+
+        return $rules;
     }
 }

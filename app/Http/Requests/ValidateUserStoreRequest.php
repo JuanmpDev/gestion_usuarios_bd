@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
 
 class ValidateUserStoreRequest extends FormRequest
 {
@@ -20,12 +19,19 @@ class ValidateUserStoreRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules()
     {
-        return [
-            'name' => 'alpha|required|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required','min:8', 'confirmed', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/',
+        $rules = [
+            'inputName' => 'alpha|required|max:255',
+            'inputEmail' => 'required|email|unique:users,email',
+            'role' => 'required|exists:rols,id',
+            'inputPassword' => 'required','min:8', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/',
         ];
+
+        return $rules;
     }
+
+
+
 }
+

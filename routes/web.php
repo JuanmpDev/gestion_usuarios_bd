@@ -36,20 +36,20 @@ Route::get('/updates', function(){
 
 })->name('updates');
 
+Route::middleware('checkRoleUser')->group(function() {
 
-Route::Resource('/admin/users', UsersController::class)->middleware('checkRoleUser');
+        Route::Resource('/admin/users', UsersController::class);
 
-    // Route::get('index',[UsersController::class, 'index'])->name('userDashboard');
-    // Route::get('create', [UsersController::class, 'create'])->name('users.create');
-    // Route::get('destroy/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
-    // Route::post('store', [UsersController::class, 'store'])->name('users.store');
-    // Route::get('show/{id}', [UsersController::class, 'show'])->name('users.show');
-    // Route::get('edit/{id}', [UsersController::class, 'edit'])->name('users.edit');
-    // Route::put('update/{id}', [UsersController::class, 'update'])->name('users.update');
+        // Route::get('index',[UsersController::class, 'index'])->name('userDashboard');
+        // Route::get('create', [UsersController::class, 'create'])->name('users.create');
+        // Route::get('destroy/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
+        // Route::post('store', [UsersController::class, 'store'])->name('users.store');
+        // Route::get('show/{id}', [UsersController::class, 'show'])->name('users.show');
+        // Route::get('edit/{id}', [UsersController::class, 'edit'])->name('users.edit');
+        // Route::put('update/{id}', [UsersController::class, 'update'])->name('users.update');
 
 
-
-Route::Resource("/admin/rols",RolsController::class)->except(["show"])->middleware('checkRoleUser');
+    Route::Resource("/admin/rols",RolsController::class)->except(["show"]);
 
        /*
         Route::get('create', [RolsController::class, 'create'])->name('rols.create');
@@ -58,6 +58,8 @@ Route::Resource("/admin/rols",RolsController::class)->except(["show"])->middlewa
         Route::get('show{id}', [RolsController::class, 'show'])->name('rols.show');
         Route::get('{id}/edit', [RolsController::class, 'edit'])->name('rols.edit');
         Route::put('update/{id}', [RolsController::class, 'update'])->name('rols.update');*/
+
+});
 
 
 Route::middleware('auth')->group(function () {
