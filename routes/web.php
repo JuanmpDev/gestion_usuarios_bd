@@ -49,7 +49,7 @@ Route::Resource('/admin/users', UsersController::class)->middleware('checkRoleUs
 
 
 
-Route::Resource("/admin/rols",RolsController::class)->except(["show"]);
+Route::Resource("/admin/rols",RolsController::class)->except(["show"])->middleware('checkRoleUser');
 
        /*
         Route::get('create', [RolsController::class, 'create'])->name('rols.create');
