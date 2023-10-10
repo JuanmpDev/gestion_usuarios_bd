@@ -7,6 +7,7 @@ use App\Http\Requests\Api\ValidateUserStoreRequest;
 use App\Http\Requests\Api\ValidateUserUpdateRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -69,9 +70,10 @@ class UserController extends Controller
     {
 
         try {
-            $user->name = $request->inputName;
-            $user->email = $request->inputEmail;
-            $user->rol_id = $request->role;
+
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->rol_id = $request->rol_id;
 
             // Guarda los cambios en la base de datos
             $user->save();

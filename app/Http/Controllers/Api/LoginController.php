@@ -14,16 +14,13 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login']]);
-    }
 
     public function register(Request $request)
     {
         $request->validate(['name' => ['required', 'string', 'max:255'],
             'email' => 'required|email|unique:users,email',
             'password' => ['required', 'confirmed', 'min:6']]);
+
         try {
             // Crear el usuario con los datos validados
             $user = User::create([

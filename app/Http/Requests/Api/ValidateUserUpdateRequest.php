@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Symfony\Component\HttpFoundation\Response;
 
 class ValidateUserUpdateRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class ValidateUserUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,15 +23,26 @@ class ValidateUserUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $userId = $this->route('user')->id; // Asegúrate de que 'user' sea el nombre correcto del parámetro de ruta.
+
+        $userId = $this->route('user')->id;
 
         $rules = [
 
-            'inputName' => 'alpha|required|max:255',
-            'inputEmail' => 'required|email|unique:users,email,' . $userId,
-            'role' => 'required|exists:rols,id',
+            'name' => 'alpha|required|max:255',
+            'email' => 'required|email|unique:users,email,' . $userId,
+            'rol_id' => 'required|exists:rols,id',
         ];
 
         return $rules;
+    }
+
+
+    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator): void
+    {
+        $errors = $validator->errors();
+
+        throw new HttpResponseException(response()->json([
+            'errors' => $errors
+        ], Response::HTTP_UNPROCESSABLE_ENTITY));
     }
 }

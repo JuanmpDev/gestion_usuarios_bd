@@ -25,6 +25,7 @@ Route::group([
     'prefix' => 'auth'
 
 ], function () {
+    Route::post('register', [LoginController::class,'register']);
     Route::post('login', [LoginController::class,'login']);
     Route::post('logout', [LoginController::class,'logout']);
     Route::post('refresh', [LoginController::class,'refresh']);
@@ -32,22 +33,18 @@ Route::group([
 
 });
 
-Route::post('register', [LoginController::class,'register']);
-
-
-
 
 Route::middleware(['jwt.auth'])->group(function(){
 
-    Route::resource('users', UserController::class)->except(['create', 'edit']);
+    Route::apiResource('users', UserController::class);
 
-       // Route::get('index',[UsersController::class, 'index'])->name('userDashboard');
-        // Route::get('destroy/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
-        // Route::post('store', [UsersController::class, 'store'])->name('users.store');
-        // Route::get('show/{id}', [UsersController::class, 'show'])->name('users.show');
-        // Route::put('update/{id}', [UsersController::class, 'update'])->name('users.update');
+       // Route::get('users',[UsersController::class, 'index'])->name('index');
+        // Route::post('users', [UsersController::class, 'store'])->name('users.store');
+        // Route::get('users/destroy/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
+        // Route::get('users/show/{id}', [UsersController::class, 'show'])->name('users.show');
+        // Route::put('users/{id}', [UsersController::class, 'update'])->name('users.update');
 
-    Route::resource ('rols', RolsController ::class);
+    Route::apiResource ('rols', RolsController::class);
 
          /*
         Route::get('index', [RolsController::class, 'index'])->name('index');

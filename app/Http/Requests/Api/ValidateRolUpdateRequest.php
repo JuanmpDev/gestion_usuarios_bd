@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
 
-class ValidateUserStoreRequest extends FormRequest
+class ValidateRolUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,6 @@ class ValidateUserStoreRequest extends FormRequest
     {
         $rules = [
             'name' => 'alpha|required|max:255',
-            'email' => 'required|email|unique:users,email',
-            'rol_id' => 'required|exists:rols,id',
-            'password' => ['required', 'min:8', 'regex:/^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%@]).*$/'],
         ];
 
         return $rules;
@@ -42,4 +39,3 @@ class ValidateUserStoreRequest extends FormRequest
         ], Response::HTTP_UNPROCESSABLE_ENTITY));
     }
 }
-

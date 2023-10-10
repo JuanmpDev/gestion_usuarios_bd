@@ -25,7 +25,7 @@ class ValidateUserStoreRequest extends FormRequest
         return [
             'name' => 'alpha|required|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required','min:8', 'confirmed', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/',
+            'inputPassword' => ['required', 'min:8', 'regex:/^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%@]).*$/'],
         ];
     }
 }
