@@ -38,17 +38,18 @@ Route::middleware(['jwt.auth'])->group(function(){
 
     Route::apiResource('users', UserController::class);
 
-       // Route::get('users',[UsersController::class, 'index'])->name('index');
-        // Route::post('users', [UsersController::class, 'store'])->name('users.store');
-        // Route::get('users/destroy/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
-        // Route::get('users/show/{id}', [UsersController::class, 'show'])->name('users.show');
-        // Route::put('users/{id}', [UsersController::class, 'update'])->name('users.update');
+    /*
+        Route::get('index', [UsersController::class, 'index'])->name('index');
+        Route::delete('destroy/{id}', [UsersController::class, 'destroy'])->name('users.destroy');
+        Route::post('store', [UsersController::class, 'store'])->name('users.store');
+        Route::get('show{id}', [UsersController::class, 'show'])->name('users.show');
+        Route::put('update/{id}', [UsersController::class, 'update'])->name('users.update');*/
 
     Route::apiResource ('rols', RolsController::class);
 
          /*
         Route::get('index', [RolsController::class, 'index'])->name('index');
-        Route::get('destroy/{id}', [RolsController::class, 'destroy'])->name('rols.destroy');
+        Route::delete('destroy/{id}', [RolsController::class, 'destroy'])->name('rols.destroy');
         Route::post('store', [RolsController::class, 'store'])->name('rols.store');
         Route::get('show{id}', [RolsController::class, 'show'])->name('rols.show');
         Route::put('update/{id}', [RolsController::class, 'update'])->name('rols.update');*/

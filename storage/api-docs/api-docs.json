@@ -1,0 +1,721 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "gestion_usuarios",
+        "description": "Proyecto API REST hecho en Laravel para la gestión de usuarios de una base de datos MySQL",
+        "contact": {
+            "email": "juanmanuel.pernia@ara-tech.es"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0",
+        "x-logo": {
+            "url": "https://via.placeholder.com/190x90.png?text=L5-Swagger"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:80/gestion_usuarios/public/"
+        }
+    ],
+    "paths": {
+        "/api/auth/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Register a new user",
+                "description": "Register a new user and return a token",
+                "operationId": "0e4e618a937438b8cc565aa9a7a06a93",
+                "requestBody": {
+                    "description": "User to register",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "The name of the user",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "The email of the user",
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "description": "The password of the user",
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "Password confirmation that should match the password",
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "rol_id": {
+                                        "description": "The role id of the user",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuario registrado con éxito"
+                    },
+                    "500": {
+                        "description": "Error al registrar el usuario"
+                    }
+                }
+            }
+        },
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Log in a user",
+                "description": "Log in a user and return a token",
+                "operationId": "90178718a362d441e5a0960b70330f60",
+                "requestBody": {
+                    "description": "Credentials to log in",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "description": "The email of the user",
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "description": "The password of the user",
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuario logueado con éxito"
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/auth/me": {
+            "get": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Get the authenticated user",
+                "description": "Return the authenticated user",
+                "operationId": "e0cc7e0c7197ab7a7090c8a14ab57827",
+                "responses": {
+                    "200": {
+                        "description": "Authenticated user"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Log out the user",
+                "description": "Invalidate the token and log out the user",
+                "operationId": "f5cd9962cf524836ea5e4a3ee8eeafec",
+                "responses": {
+                    "200": {
+                        "description": "Successfully logged out"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/refresh": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Refresh a token",
+                "description": "Refresh the token for the authenticated user",
+                "operationId": "1ade3a8aa02496495abb88dece038d2f",
+                "responses": {
+                    "200": {
+                        "description": "Token refreshed"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/rols": {
+            "get": {
+                "tags": [
+                    "Rols"
+                ],
+                "summary": "List all rols",
+                "description": "List all rols",
+                "operationId": "Listrols",
+                "responses": {
+                    "200": {
+                        "description": "List of all successful roles"
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized"
+                    },
+                    "404": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Rols"
+                ],
+                "summary": "Store a new rol in the database",
+                "description": "Store a new rol",
+                "operationId": "7e2a4f8207a168bb91aab147fb527ee7",
+                "requestBody": {
+                    "description": "rol to store",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "The name of the rol",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Rol successfully created"
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized"
+                    },
+                    "422": {
+                        "description": "Error: Unprocessable Content"
+                    },
+                    "500": {
+                        "description": "Error: Internal Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/rols/{id}": {
+            "get": {
+                "tags": [
+                    "Rols"
+                ],
+                "summary": "Show a specific rol",
+                "description": "Show a specific rol",
+                "operationId": "713e6cc28efc82d2760134c2ad410370",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the rol to show",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Rol found"
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized"
+                    },
+                    "404": {
+                        "description": "Error: Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Rols"
+                ],
+                "summary": "Update a specific rol",
+                "description": "Update a specific rol",
+                "operationId": "18c650c41c659b8ea6282004e8be9305",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the rol to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Rol to update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "The name of the rol",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Rol successfully modified"
+                    },
+                    "404": {
+                        "description": "Error: Not Found"
+                    },
+                    "422": {
+                        "description": "Error: Unprocessable Content"
+                    },
+                    "500": {
+                        "description": "Error: Internal Server Error"
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Rols"
+                ],
+                "summary": "Delete a specific rol",
+                "description": "Delete a specific rol",
+                "operationId": "d6eafcb80350ca803baa733349bef536",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the rol to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Rol successfully eliminated "
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized"
+                    },
+                    "404": {
+                        "description": "Error: Not found"
+                    },
+                    "500": {
+                        "description": "Error: Internal Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "List all users",
+                "description": "List all users",
+                "operationId": "ListUsers",
+                "responses": {
+                    "200": {
+                        "description": "List of all successful users"
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized"
+                    },
+                    "404": {
+                        "description": "Forbidden"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Store a new user",
+                "description": "Create and store a new user in the database",
+                "operationId": "be551c1d694a01c164966f58bfa77013",
+                "requestBody": {
+                    "description": "User to store",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "password_confirmation",
+                                    "rol_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "The name of the user",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "The email of the user",
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "description": "The password of the user",
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "Password confirmation that should match the password",
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "rol_id": {
+                                        "description": "The role id of the user",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User successfully created"
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized"
+                    },
+                    "422": {
+                        "description": "Error: Unprocessable Content"
+                    },
+                    "500": {
+                        "description": "Error: Internal Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/users/{id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Show a specific user",
+                "description": "Show a specific user",
+                "operationId": "6f51bd5fa2dddcd25e44cfa53dcbd10a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the user to show",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User found"
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized"
+                    },
+                    "404": {
+                        "description": "Error: Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update a specific user",
+                "description": "Update a specific user in the database",
+                "operationId": "070e37fc9aff78ae73860751bc990ed3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the user to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "User to update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "The name of the user",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "The email of the user",
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "rol_id": {
+                                        "description": "The role id of the user",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User successfully modified"
+                    },
+                    "404": {
+                        "description": "Error: Not Found"
+                    },
+                    "422": {
+                        "description": "Error: Unprocessable Content"
+                    },
+                    "500": {
+                        "description": "Error: Internal Server Error"
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Delete a specific user",
+                "description": "Delete a specific user",
+                "operationId": "0b4133ed462528a5e648b88ead11e929",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the user to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User successfully eliminated "
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized"
+                    },
+                    "404": {
+                        "description": "Error: Not found"
+                    },
+                    "500": {
+                        "description": "Error: Internal Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ValidateRolStoreRequest": {
+                "description": "Request schema for storing a new role.",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "description": "The name of the role.",
+                        "type": "string",
+                        "example": "Administrator"
+                    }
+                },
+                "type": "object"
+            },
+            "ValidateRolUpdateRequest": {
+                "description": "Request schema for updating a new role.",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "description": "The name of the role.",
+                        "type": "string",
+                        "example": "User"
+                    }
+                },
+                "type": "object"
+            },
+            "ValidateUserStoreRequest": {
+                "description": "Request schema for storing a new user.",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "description": "The name of the user. (Only letters)",
+                        "type": "string",
+                        "example": "Administrator"
+                    },
+                    "email": {
+                        "description": "The email of the user. (email format)",
+                        "type": "email",
+                        "example": "user@example.com"
+                    },
+                    "password": {
+                        "description": "The password of the user. (minimum 8 letters, at least 1 letter, 1 number and 1 alphanumeric [!$#%@])",
+                        "type": "string",
+                        "example": "Administrador1@"
+                    },
+                    "password_confirmed": {
+                        "description": "The confirmed password of the user. (minimum 8 letters, at least 1 letter, 1 number and 1 alphanumeric [!$#%@])",
+                        "type": "string",
+                        "example": "Administrador1@"
+                    },
+                    "rol_id": {
+                        "description": "The rol_id of the user. ",
+                        "type": "integer",
+                        "example": "1"
+                    }
+                },
+                "type": "object"
+            },
+            "ValidateUserUpdateRequest": {
+                "description": "Request schema for updating a new user.",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "description": "The name of the user.",
+                        "type": "string",
+                        "example": "Administrator"
+                    },
+                    "email": {
+                        "description": "The email of the user. (email format)",
+                        "type": "email",
+                        "example": "user@example.com"
+                    },
+                    "rol_id": {
+                        "description": "The rol_id of the user. ",
+                        "type": "integer",
+                        "example": "1"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "apiAuth": {
+                "type": "http",
+                "description": "API Key Auth",
+                "name": "Token based Based",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    }
+}

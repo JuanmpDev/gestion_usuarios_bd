@@ -14,7 +14,52 @@ class LoginController extends Controller
      *
      * @return void
      */
+/**
+ * @OA\Post(
+ *     path="/api/auth/register",
+ *     tags={"Authentication"},
+ *     summary="Register a new user",
+ *     description="Register a new user and return a token",
+ *     @OA\Response(response="201", description="Usuario registrado con éxito"),
+ *     @OA\Response(response="500", description="Error al registrar el usuario"),
 
+ *     @OA\RequestBody(
+ *         description="User to register",
+ *         required=true,
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(
+ *                 property="name",
+ *                 type="string",
+ *                 description="The name of the user"
+ *             ),
+ *             @OA\Property(
+ *                 property="email",
+ *                 type="string",
+ *                 format="email",
+ *                 description="The email of the user"
+ *             ),
+ *             @OA\Property(
+ *                  property="password",
+ *                  type="string",
+ *                  format="password",
+ *                  description="The password of the user"
+ *              ),
+ *             @OA\Property(
+ *                  property="password_confirmation",
+ *                  type="string",
+ *                  format="password",
+ *                  description="Password confirmation that should match the password"
+*              ),
+*             @OA\Property(
+*                 property="rol_id",
+*                 type="integer",
+*                 description="The role id of the user"
+*             )
+*         )
+*     )
+*  )
+*/
     public function register(Request $request)
     {
         $request->validate(['name' => ['required', 'string', 'max:255'],
@@ -54,6 +99,36 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
+    /**
+* @OA\Post(
+*    path="/api/auth/login",
+*    tags={"Authentication"},
+*    summary="Log in a user",
+*    description="Log in a user and return a token",
+*    @OA\Response(response=200, description="Usuario logueado con éxito"),
+*    @OA\Response(response="401", description="Error: Unauthorized"),
+
+*    @OA\RequestBody(
+*        description="Credentials to log in",
+*        required=true,
+*        @OA\JsonContent(
+*            type="object",
+*            @OA\Property(
+*                property="email",
+*                type="string",
+*                format="email",
+*                description="The email of the user"
+*            ),
+*            @OA\Property(
+*                property="password",
+*                type="string",
+*                format="password",
+*                description="The password of the user"
+*            )
+*        )
+*    )
+*)
+*/
     public function login()
     {
         $credentials = request(['email', 'password']);
@@ -70,6 +145,17 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
+
+     /**
+ * @OA\Get(
+ *     path="/api/auth/me",
+ *     tags={"Authentication"},
+ *     summary="Get the authenticated user",
+ *     description="Return the authenticated user",
+ *     security={{"bearerAuth":{}}},
+ *     @OA\Response(response="200", description="Authenticated user"),
+ *)
+ */
     public function me()
     {
         return response()->json(auth()->user());
@@ -80,6 +166,17 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
+
+     /**
+ * @OA\Post(
+ *     path="/api/auth/logout",
+ *     tags={"Authentication"},
+ *     summary="Log out the user",
+ *     description="Invalidate the token and log out the user",
+ *     security={{"bearerAuth":{}}},
+ *     @OA\Response(response="200", description="Successfully logged out"),
+ *)
+ */
     public function logout()
     {
         auth()->logout();
@@ -92,6 +189,17 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
+
+     /**
+ * @OA\Post(
+ *     path="/api/auth/refresh",
+ *     tags={"Authentication"},
+ *     summary="Refresh a token",
+ *     description="Refresh the token for the authenticated user",
+ *     security={{"bearerAuth":{}}},
+ *     @OA\Response(response="200", description="Token refreshed"),
+ *)
+ */
     public function refresh()
     {
         return $this->respondWithToken(auth()->refresh);

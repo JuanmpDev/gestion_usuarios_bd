@@ -6,6 +6,48 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @OA\Schema(
+ *     schema="ValidateUserStoreRequest",
+ *     description="Request schema for storing a new user.",
+ *     required={"name"},
+ *     @OA\Property(
+ *         property="name",
+ *         type="string",
+ *         description="The name of the user. (Only letters)",
+ *         example="Administrator"
+ *     ),
+ *     @OA\Property(
+ *         property="email",
+ *         type="email",
+ *         description="The email of the user. (email format)",
+ *         example="user@example.com"
+ *     ),
+ *     @OA\Property(
+ *         property="password",
+ *         type="string",
+ *         description="The password of the user. (minimum 8 letters, at least 1 letter, 1 number and 1 alphanumeric [!$#%@])",
+ *         example="Administrador1@"
+ *     ),
+ *      @OA\Property(
+ *         property="password_confirmed",
+ *         type="string",
+ *         description="The confirmed password of the user. (minimum 8 letters, at least 1 letter, 1 number and 1 alphanumeric [!$#%@])",
+ *         example="Administrador1@"
+ *     ),
+ *      @OA\Property(
+ *         property="rol_id",
+ *         type="int",
+ *         description="The rol_id of the user. ",
+ *         example="1"
+ *     ),
+ *     @OA\Tag(
+ *         name="ValidateUserStoreRequest",
+ *         description="Request for storing a new user."
+ *     )
+ * )
+ */
+
 class ValidateUserStoreRequest extends FormRequest
 {
     /**

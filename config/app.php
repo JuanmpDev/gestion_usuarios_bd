@@ -171,6 +171,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
+        L5Swagger\L5SwaggerServiceProvider::class,
+
 
     ])->toArray(),
 

@@ -6,6 +6,24 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @OA\Schema(
+ *     schema="ValidateRolUpdateRequest",
+ *     description="Request schema for updating a new role.",
+ *     required={"name"},
+ *     @OA\Property(
+ *         property="name",
+ *         type="string",
+ *         description="The name of the role.",
+ *         example="User"
+ *     ),
+ *     @OA\Tag(
+ *         name="ValidateRolUpdateRequest",
+ *         description="Request for updating a new role."
+ *     )
+ * )
+ */
+
 class ValidateRolUpdateRequest extends FormRequest
 {
     /**

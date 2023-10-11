@@ -6,6 +6,36 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @OA\Schema(
+ *     schema="ValidateUserUpdateRequest",
+ *     description="Request schema for updating a new user.",
+ *     required={"name"},
+ *     @OA\Property(
+ *         property="name",
+ *         type="string",
+ *         description="The name of the user.",
+ *         example="Administrator"
+ *     ),
+*     @OA\Property(
+ *         property="email",
+ *         type="email",
+ *         description="The email of the user. (email format)",
+ *         example="user@example.com"
+ *     ),
+ *      @OA\Property(
+ *         property="rol_id",
+ *         type="int",
+ *         description="The rol_id of the user. ",
+ *         example="1"
+ *     ),
+ *     @OA\Tag(
+ *         name="ValidateUserStoreRequest",
+ *         description="Request for updating a new user."
+ *     )
+ * )
+ */
+
 class ValidateUserUpdateRequest extends FormRequest
 {
     /**
